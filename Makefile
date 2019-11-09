@@ -23,4 +23,4 @@ livehtml:
 	sphinx-autobuild -b html $(SOURCEDIR) $(BUILDDIR)/html -H 0.0.0.0
 
 html:
-	@$(SPHINXBUILD) -b html "$(SOURCEDIR)" "docs" $(SPHINXOPTS) $(O)
+	@$(SPHINXBUILD) -b html "$(SOURCEDIR)" "docs/html" $(SPHINXOPTS) $(O)
