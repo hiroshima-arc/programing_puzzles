@@ -18,3 +18,8 @@ services:
       - ./jupyter:/work
     working_dir: '/work'
     command: ["jupyter", "notebook", "--port", "9999", "--ip=0.0.0.0", "--allow-root" ]
+
+  mattermost:
+    image: mattermost/mattermost-preview
+    ports:
+      - 8065:8065

@@ -10,7 +10,8 @@
     "start:sphinx": "nf start -j jupyter/Procfile",
     "docs:sphinx:proxy": "browser-sync start --config jupyter/bs-config.js",
     "docs:sphinx:local": "docker-compose up sphinx",
-    "docs:sphinx:build": "docker-compose run sphinx make html"
+    "docs:sphinx:build": "docker-compose run sphinx make html",
+    "chat:start": "docker-compose up mattermost"
   },
   "repository": {
     "type": "git",
