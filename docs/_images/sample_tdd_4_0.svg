@@ -1,0 +1,21 @@
+<svg contentScriptType="application/ecmascript" contentStyleType="text/css" height="111px" preserveAspectRatio="none" style="width:213px;height:111px;" version="1.1" viewBox="0 0 213 111" width="213px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify"><defs><filter height="300%" id="fj7xku4jof38" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--cluster FizzBuzz--><rect fill="#FFFFFF" filter="url(#fj7xku4jof38)" height="65" style="stroke: #000000; stroke-width: 1.5;" width="113" x="89" y="16.5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="63" x="114" y="32.0352">FizzBuzz</text><ellipse cx="145.2548" cy="58.659" fill="#FEFECE" filter="url(#fj7xku4jof38)" rx="48.2548" ry="14.659" style="stroke: #A80036; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="64" x="113.2548" y="63.4031">Put Value</text><!--entity User--><ellipse cx="21.5" cy="27" fill="#FEFECE" filter="url(#fj7xku4jof38)" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><path d="M21.5,35 L21.5,62 M8.5,43 L34.5,43 M21.5,62 L8.5,77 M21.5,62 L34.5,77 " fill="none" filter="url(#fj7xku4jof38)" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="31" x="6" y="97.5352">User</text><!--link User to Put Value--><path d="M37.2047,58.5 C52.1936,58.5 75.5697,58.5 96.7728,58.5 " fill="none" id="User-Put Value" style="stroke: #A80036; stroke-width: 1.0;"/><!--
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor User
+rectangle FizzBuzz {
+  User - - (Put Value)
+}
+@enduml
+
+PlantUML version 1.2018.10(Sun Aug 26 02:02:59 JST 2018)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Java Version: 1.8.0_202-b08
+Operating System: Mac OS X
+OS Version: 10.14.3
+Default Encoding: UTF-8
+Language: ja
+Country: JP
+--></g></svg>

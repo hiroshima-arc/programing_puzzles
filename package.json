@@ -1,0 +1,38 @@
+{
+  "name": "programing_puzzles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nf start -j ./Procfile",
+    "jupyter:local": "docker-compose up jupyter",
+    "jupyter:proxy": "browser-sync start --config bs-config.js",
+    "start:sphinx": "nf start -j jupyter/Procfile",
+    "docs:sphinx:proxy": "browser-sync start --config jupyter/bs-config.js",
+    "docs:sphinx:local": "docker-compose up sphinx",
+    "docs:sphinx:build": "docker-compose run sphinx make html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiroshima-arc/programing_puzzles.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hiroshima-arc/programing_puzzles/issues"
+  },
+  "homepage": "https://github.com/hiroshima-arc/programing_puzzles#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "connect-browser-sync": "^2.1.0",
+    "cpx": "^1.5.0",
+    "foreman": "^3.0.1",
+    "markdown-to-html": "0.0.13",
+    "nodemon": "^1.19.4",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.0",
+    "rimraf": "^3.0.0",
+    "watch": "^1.0.2"
+  }
+}

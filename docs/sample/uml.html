@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. UML &mdash; ProgramingPuzzles 1.0.0 ドキュメント</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="prev" title="4. PythonでTDD" href="tdd.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ProgramingPuzzles
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">プログラマ脳を鍛える数学パズル</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math_puzzles/Q01.html">1. 10進数で回文</a></li>
+</ul>
+<p class="caption"><span class="caption-text">サンプル</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Fibonacci.html">1. Fibonacci</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FibonacciJavaScript.html">2. Fibonacci(JavaScript)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TestingAndDebugging.html">3. Testing and Debugging Jupyter Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tdd.html">4. PythonでTDD</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. UML</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">5.1. ユースケース図</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">5.2. クラス図</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">5.3. シーケンス図</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ProgramingPuzzles</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>5. UML</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sample/uml.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="uml">
+<h1>5. UML<a class="headerlink" href="#uml" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id1">
+<h2>5.1. ユースケース図<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-01c0f0950bdead27ea39f75d3b61f5e650a2d953.png" alt="left to right direction
+skinparam packageStyle rectangle
+actor customer
+actor clerk
+rectangle checkout {
+  customer -- (checkout)
+  (checkout) .&gt; (payment) : include
+  (help) .&gt; (checkout) : extends
+  (checkout) -- clerk
+}"/>
+</p>
+</div>
+<div class="section" id="id2">
+<h2>5.2. クラス図<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-0669752ed5b091d041f63651e25ff3b3cb734aa3.png" alt="class Car
+Driver - Car : drives &gt;
+Car *- Wheel : have 4 &gt;
+Car -- Person : &lt; owns"/>
+</p>
+</div>
+<div class="section" id="id3">
+<h2>5.3. シーケンス図<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-d1da13e9046fec1540774f67e08e298aef06af06.png" alt="participant User
+User -&gt; A: DoWork
+activate A
+A -&gt; B: &lt;&lt; createRequest &gt;&gt;
+activate B
+B -&gt; C: DoWork
+activate C
+C --&gt; B: WorkDone
+destroy C
+B --&gt; A: RequestCreated
+deactivate B
+A -&gt; User: Done
+deactivate A"/>
+</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="tdd.html" class="btn btn-neutral float-left" title="4. PythonでTDD" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, k2works
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

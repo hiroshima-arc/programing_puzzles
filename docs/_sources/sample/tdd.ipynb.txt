@@ -1,0 +1,339 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 41,
+   "metadata": {
+    "pycharm": {
+     "is_executing": false
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Requirement already satisfied: iplantuml in /usr/local/lib/python3.7/site-packages (0.1.1)\n",
+      "Requirement already satisfied: plantweb in /usr/local/lib/python3.7/site-packages (from iplantuml) (1.1.0)\n",
+      "Requirement already satisfied: requests in /usr/local/lib/python3.7/site-packages (from plantweb->iplantuml) (2.19.1)\n",
+      "Requirement already satisfied: six in /usr/local/lib/python3.7/site-packages (from plantweb->iplantuml) (1.11.0)\n",
+      "Requirement already satisfied: docutils in /usr/local/lib/python3.7/site-packages (from plantweb->iplantuml) (0.14)\n",
+      "Requirement already satisfied: idna<2.8,>=2.5 in /usr/local/lib/python3.7/site-packages (from requests->plantweb->iplantuml) (2.7)\n",
+      "Requirement already satisfied: urllib3<1.24,>=1.21.1 in /usr/local/lib/python3.7/site-packages (from requests->plantweb->iplantuml) (1.23)\n",
+      "Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.7/site-packages (from requests->plantweb->iplantuml) (2018.8.13)\n",
+      "Requirement already satisfied: chardet<3.1.0,>=3.0.2 in /usr/local/lib/python3.7/site-packages (from requests->plantweb->iplantuml) (3.0.4)\n"
+     ]
+    }
+   ],
+   "source": [
+    "import sys\n",
+    "!{sys.executable} -m pip install iplantuml\n",
+    "import iplantuml"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# PythonでTDD\n",
+    "\n",
+    "\n",
+    "## 仕様\n",
+    "\n",
+    ">1 から 100 までの数をプリントするプログラムを書け。 \n",
+    "\n",
+    ">ただし 3 の倍数のときは数の代わりに｢Fizz｣と、\n",
+    "\n",
+    ">5 の倍数のときは｢Buzz｣とプリントし、\n",
+    "\n",
+    ">3 と 5 両方の倍数の場合には｢FizzBuzz｣とプリントすること。"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 設計"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### ユースケース図"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 42,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/svg+xml": [
+       "<svg contentScriptType=\"application/ecmascript\" contentStyleType=\"text/css\" height=\"111px\" preserveAspectRatio=\"none\" style=\"width:213px;height:111px;\" version=\"1.1\" viewBox=\"0 0 213 111\" width=\"213px\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" zoomAndPan=\"magnify\"><defs><filter height=\"300%\" id=\"fj7xku4jof38\" width=\"300%\" x=\"-1\" y=\"-1\"><feGaussianBlur result=\"blurOut\" stdDeviation=\"2.0\"/><feColorMatrix in=\"blurOut\" result=\"blurOut2\" type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0\"/><feOffset dx=\"4.0\" dy=\"4.0\" in=\"blurOut2\" result=\"blurOut3\"/><feBlend in=\"SourceGraphic\" in2=\"blurOut3\" mode=\"normal\"/></filter></defs><g><!--cluster FizzBuzz--><rect fill=\"#FFFFFF\" filter=\"url(#fj7xku4jof38)\" height=\"65\" style=\"stroke: #000000; stroke-width: 1.5;\" width=\"113\" x=\"89\" y=\"16.5\"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"63\" x=\"114\" y=\"32.0352\">FizzBuzz</text><ellipse cx=\"145.2548\" cy=\"58.659\" fill=\"#FEFECE\" filter=\"url(#fj7xku4jof38)\" rx=\"48.2548\" ry=\"14.659\" style=\"stroke: #A80036; stroke-width: 1.5;\"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"14\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"64\" x=\"113.2548\" y=\"63.4031\">Put Value</text><!--entity User--><ellipse cx=\"21.5\" cy=\"27\" fill=\"#FEFECE\" filter=\"url(#fj7xku4jof38)\" rx=\"8\" ry=\"8\" style=\"stroke: #A80036; stroke-width: 2.0;\"/><path d=\"M21.5,35 L21.5,62 M8.5,43 L34.5,43 M21.5,62 L8.5,77 M21.5,62 L34.5,77 \" fill=\"none\" filter=\"url(#fj7xku4jof38)\" style=\"stroke: #A80036; stroke-width: 2.0;\"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"14\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"31\" x=\"6\" y=\"97.5352\">User</text><!--link User to Put Value--><path d=\"M37.2047,58.5 C52.1936,58.5 75.5697,58.5 96.7728,58.5 \" fill=\"none\" id=\"User-Put Value\" style=\"stroke: #A80036; stroke-width: 1.0;\"/><!--\n",
+       "@startuml\n",
+       "left to right direction\n",
+       "skinparam packageStyle rectangle\n",
+       "actor User\n",
+       "rectangle FizzBuzz {\n",
+       "  User - - (Put Value)\n",
+       "}\n",
+       "@enduml\n",
+       "\n",
+       "PlantUML version 1.2018.10(Sun Aug 26 02:02:59 JST 2018)\n",
+       "(GPL source distribution)\n",
+       "Java Runtime: Java(TM) SE Runtime Environment\n",
+       "JVM: Java HotSpot(TM) 64-Bit Server VM\n",
+       "Java Version: 1.8.0_202-b08\n",
+       "Operating System: Mac OS X\n",
+       "OS Version: 10.14.3\n",
+       "Default Encoding: UTF-8\n",
+       "Language: ja\n",
+       "Country: JP\n",
+       "--></g></svg>"
+      ],
+      "text/plain": [
+       "<IPython.core.display.SVG object>"
+      ]
+     },
+     "execution_count": 42,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%%plantuml --jar\n",
+    "\n",
+    "@startuml\n",
+    "left to right direction\n",
+    "skinparam packageStyle rectangle\n",
+    "actor User\n",
+    "rectangle FizzBuzz {\n",
+    "  User -- (Put Value)\n",
+    "}\n",
+    "@enduml"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### クラス図"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 43,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/svg+xml": [
+       "<svg contentScriptType=\"application/ecmascript\" contentStyleType=\"text/css\" height=\"92px\" preserveAspectRatio=\"none\" style=\"width:140px;height:92px;\" version=\"1.1\" viewBox=\"0 0 140 92\" width=\"140px\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" zoomAndPan=\"magnify\"><defs><filter height=\"300%\" id=\"f13kgvyecgvkt0\" width=\"300%\" x=\"-1\" y=\"-1\"><feGaussianBlur result=\"blurOut\" stdDeviation=\"2.0\"/><feColorMatrix in=\"blurOut\" result=\"blurOut2\" type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0\"/><feOffset dx=\"4.0\" dy=\"4.0\" in=\"blurOut2\" result=\"blurOut3\"/><feBlend in=\"SourceGraphic\" in2=\"blurOut3\" mode=\"normal\"/></filter></defs><g><!--class FizzBuzz--><rect fill=\"#FEFECE\" filter=\"url(#f13kgvyecgvkt0)\" height=\"73.9102\" id=\"FizzBuzz\" style=\"stroke: #A80036; stroke-width: 1.5;\" width=\"123\" x=\"6\" y=\"8\"/><ellipse cx=\"39\" cy=\"24\" fill=\"#ADD1B2\" rx=\"11\" ry=\"11\" style=\"stroke: #A80036; stroke-width: 1.0;\"/><path d=\"M41.4731,30.1431 Q40.8921,30.4419 40.2529,30.5913 Q39.6138,30.7407 38.9082,30.7407 Q36.4014,30.7407 35.0815,29.0889 Q33.7617,27.437 33.7617,24.3159 Q33.7617,21.1865 35.0815,19.5347 Q36.4014,17.8828 38.9082,17.8828 Q39.6138,17.8828 40.2612,18.0322 Q40.9087,18.1816 41.4731,18.4805 L41.4731,21.2031 Q40.8423,20.6221 40.2488,20.3523 Q39.6553,20.0825 39.0244,20.0825 Q37.6797,20.0825 36.9949,21.1492 Q36.3101,22.2158 36.3101,24.3159 Q36.3101,26.4077 36.9949,27.4744 Q37.6797,28.541 39.0244,28.541 Q39.6553,28.541 40.2488,28.2712 Q40.8423,28.0015 41.4731,27.4204 Z \"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"12\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"51\" x=\"57\" y=\"28.5352\">FizzBuzz</text><line style=\"stroke: #A80036; stroke-width: 1.5;\" x1=\"7\" x2=\"128\" y1=\"40\" y2=\"40\"/><line style=\"stroke: #A80036; stroke-width: 1.5;\" x1=\"7\" x2=\"128\" y1=\"48\" y2=\"48\"/><ellipse cx=\"17\" cy=\"59.9775\" fill=\"#84BE84\" rx=\"3\" ry=\"3\" style=\"stroke: #038048; stroke-width: 1.0;\"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"11\" lengthAdjust=\"spacingAndGlyphs\" text-decoration=\"underline\" textLength=\"97\" x=\"26\" y=\"62.6348\">generate(number)</text><line style=\"stroke: #000000; stroke-width: 1.0;\" x1=\"26\" x2=\"123\" y1=\"64.6348\" y2=\"64.6348\"/><ellipse cx=\"17\" cy=\"72.9326\" fill=\"#84BE84\" rx=\"3\" ry=\"3\" style=\"stroke: #038048; stroke-width: 1.0;\"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"11\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"73\" x=\"26\" y=\"75.5898\">iterate(count)</text><!--\n",
+       "@startuml\n",
+       "class FizzBuzz {\n",
+       "+ {static}generate(number)\n",
+       "+ iterate(count)\n",
+       "}\n",
+       "\n",
+       "@enduml\n",
+       "\n",
+       "PlantUML version 1.2018.10(Sun Aug 26 02:02:59 JST 2018)\n",
+       "(GPL source distribution)\n",
+       "Java Runtime: Java(TM) SE Runtime Environment\n",
+       "JVM: Java HotSpot(TM) 64-Bit Server VM\n",
+       "Java Version: 1.8.0_202-b08\n",
+       "Operating System: Mac OS X\n",
+       "OS Version: 10.14.3\n",
+       "Default Encoding: UTF-8\n",
+       "Language: ja\n",
+       "Country: JP\n",
+       "--></g></svg>"
+      ],
+      "text/plain": [
+       "<IPython.core.display.SVG object>"
+      ]
+     },
+     "execution_count": 43,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%%plantuml --jar\n",
+    "\n",
+    "@startuml\n",
+    "class FizzBuzz {\n",
+    "+ {static}generate(number)\n",
+    "+ iterate(count)\n",
+    "}\n",
+    "\n",
+    "@enduml"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### シーケンス図"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/svg+xml": [
+       "<svg contentScriptType=\"application/ecmascript\" contentStyleType=\"text/css\" height=\"310px\" preserveAspectRatio=\"none\" style=\"width:211px;height:310px;\" version=\"1.1\" viewBox=\"0 0 211 310\" width=\"211px\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" zoomAndPan=\"magnify\"><defs><filter height=\"300%\" id=\"fdrd9ndgo8mo1\" width=\"300%\" x=\"-1\" y=\"-1\"><feGaussianBlur result=\"blurOut\" stdDeviation=\"2.0\"/><feColorMatrix in=\"blurOut\" result=\"blurOut2\" type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0\"/><feOffset dx=\"4.0\" dy=\"4.0\" in=\"blurOut2\" result=\"blurOut3\"/><feBlend in=\"SourceGraphic\" in2=\"blurOut3\" mode=\"normal\"/></filter></defs><g><rect fill=\"#FFFFFF\" filter=\"url(#fdrd9ndgo8mo1)\" height=\"80.6211\" style=\"stroke: #A80036; stroke-width: 1.0;\" width=\"10\" x=\"104.5\" y=\"117.7988\"/><rect fill=\"#FFFFFF\" filter=\"url(#fdrd9ndgo8mo1)\" height=\"73.6211\" style=\"stroke: #000000; stroke-width: 2.0;\" width=\"187\" x=\"13\" y=\"132.7988\"/><line style=\"stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;\" x1=\"41\" x2=\"41\" y1=\"86.4883\" y2=\"223.4199\"/><line style=\"stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;\" x1=\"109\" x2=\"109\" y1=\"86.4883\" y2=\"223.4199\"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"14\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"31\" x=\"23\" y=\"83.5352\">User</text><ellipse cx=\"41.5\" cy=\"13\" fill=\"#FEFECE\" filter=\"url(#fdrd9ndgo8mo1)\" rx=\"8\" ry=\"8\" style=\"stroke: #A80036; stroke-width: 2.0;\"/><path d=\"M41.5,21 L41.5,48 M28.5,29 L54.5,29 M41.5,48 L28.5,63 M41.5,48 L54.5,63 \" fill=\"none\" filter=\"url(#fdrd9ndgo8mo1)\" style=\"stroke: #A80036; stroke-width: 2.0;\"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"14\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"31\" x=\"23\" y=\"235.9551\">User</text><ellipse cx=\"41.5\" cy=\"248.9082\" fill=\"#FEFECE\" filter=\"url(#fdrd9ndgo8mo1)\" rx=\"8\" ry=\"8\" style=\"stroke: #A80036; stroke-width: 2.0;\"/><path d=\"M41.5,256.9082 L41.5,283.9082 M28.5,264.9082 L54.5,264.9082 M41.5,283.9082 L28.5,298.9082 M41.5,283.9082 L54.5,298.9082 \" fill=\"none\" filter=\"url(#fdrd9ndgo8mo1)\" style=\"stroke: #A80036; stroke-width: 2.0;\"/><rect fill=\"#FEFECE\" filter=\"url(#fdrd9ndgo8mo1)\" height=\"30.4883\" style=\"stroke: #A80036; stroke-width: 1.5;\" width=\"75\" x=\"70\" y=\"51\"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"14\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"61\" x=\"77\" y=\"71.5352\">FizzBuzz</text><rect fill=\"#FEFECE\" filter=\"url(#fdrd9ndgo8mo1)\" height=\"30.4883\" style=\"stroke: #A80036; stroke-width: 1.5;\" width=\"75\" x=\"70\" y=\"222.4199\"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"14\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"61\" x=\"77\" y=\"242.9551\">FizzBuzz</text><rect fill=\"#FFFFFF\" filter=\"url(#fdrd9ndgo8mo1)\" height=\"80.6211\" style=\"stroke: #A80036; stroke-width: 1.0;\" width=\"10\" x=\"104.5\" y=\"117.7988\"/><polygon fill=\"#A80036\" points=\"92.5,113.7988,102.5,117.7988,92.5,121.7988,96.5,117.7988\" style=\"stroke: #A80036; stroke-width: 1.0;\"/><line style=\"stroke: #A80036; stroke-width: 1.0;\" x1=\"41.5\" x2=\"98.5\" y1=\"117.7988\" y2=\"117.7988\"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"13\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"40\" x=\"48.5\" y=\"113.0566\">iterate</text><path d=\"M13,132.7988 L87,132.7988 L87,139.7988 L77,149.7988 L13,149.7988 L13,132.7988 \" fill=\"#EEEEEE\" style=\"stroke: #000000; stroke-width: 1.0;\"/><rect fill=\"none\" height=\"73.6211\" style=\"stroke: #000000; stroke-width: 2.0;\" width=\"187\" x=\"13\" y=\"132.7988\"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"13\" font-weight=\"bold\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"29\" x=\"28\" y=\"146.3672\">loop</text><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"11\" font-weight=\"bold\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"93\" x=\"102\" y=\"145.4336\">[for each iterate]</text><line style=\"stroke: #A80036; stroke-width: 1.0;\" x1=\"114.5\" x2=\"156.5\" y1=\"171.4199\" y2=\"171.4199\"/><line style=\"stroke: #A80036; stroke-width: 1.0;\" x1=\"156.5\" x2=\"156.5\" y1=\"171.4199\" y2=\"184.4199\"/><line style=\"stroke: #A80036; stroke-width: 1.0;\" x1=\"115.5\" x2=\"156.5\" y1=\"184.4199\" y2=\"184.4199\"/><polygon fill=\"#A80036\" points=\"125.5,180.4199,115.5,184.4199,125.5,188.4199,121.5,184.4199\" style=\"stroke: #A80036; stroke-width: 1.0;\"/><text fill=\"#000000\" font-family=\"sans-serif\" font-size=\"13\" lengthAdjust=\"spacingAndGlyphs\" textLength=\"54\" x=\"121.5\" y=\"166.6777\">generate</text><polygon fill=\"#A80036\" points=\"52.5,194.4199,42.5,198.4199,52.5,202.4199,48.5,198.4199\" style=\"stroke: #A80036; stroke-width: 1.0;\"/><line style=\"stroke: #A80036; stroke-width: 1.0;\" x1=\"46.5\" x2=\"108.5\" y1=\"198.4199\" y2=\"198.4199\"/><!--\n",
+       "@startuml\n",
+       "actor User\n",
+       "\n",
+       "User -> FizzBuzz: iterate\n",
+       "loop for each iterate\n",
+       "      activate FizzBuzz\n",
+       "      FizzBuzz -> FizzBuzz: generate\n",
+       "            User <- FizzBuzz\n",
+       "      deactivate FizzBuzz\n",
+       "end\n",
+       "@enduml\n",
+       "\n",
+       "PlantUML version 1.2018.10(Sun Aug 26 02:02:59 JST 2018)\n",
+       "(GPL source distribution)\n",
+       "Java Runtime: Java(TM) SE Runtime Environment\n",
+       "JVM: Java HotSpot(TM) 64-Bit Server VM\n",
+       "Java Version: 1.8.0_202-b08\n",
+       "Operating System: Mac OS X\n",
+       "OS Version: 10.14.3\n",
+       "Default Encoding: UTF-8\n",
+       "Language: ja\n",
+       "Country: JP\n",
+       "--></g></svg>"
+      ],
+      "text/plain": [
+       "<IPython.core.display.SVG object>"
+      ]
+     },
+     "execution_count": 44,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%%plantuml --jar\n",
+    "\n",
+    "@startuml\n",
+    "actor User\n",
+    "\n",
+    "User -> FizzBuzz: iterate\n",
+    "loop for each iterate\n",
+    "      activate FizzBuzz\n",
+    "      FizzBuzz -> FizzBuzz: generate\n",
+    "            User <- FizzBuzz\n",
+    "      deactivate FizzBuzz\n",
+    "end\n",
+    "@enduml"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "### TODO リスト\n",
+    "\n",
+    "-  1 から 100 まで数をプリントできるようにする。\n",
+    "-  3 の倍数のときは数の代わりに｢Fizz｣をプリントできるようにする。\n",
+    "-  5 の倍数のときは｢Buzz｣とプリントできるようにする。\n",
+    "-  3 と 5 両方の倍数の場合には｢FizzBuzz｣とプリントできるようにする。"
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## 開発"
+   ],
+   "metadata": {
+    "collapsed": false
+   }
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "metadata": {
+    "pycharm": {
+     "is_executing": false
+    }
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      ".\n",
+      "----------------------------------------------------------------------\n",
+      "Ran 1 test in 0.001s\n",
+      "\n",
+      "OK\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "<unittest.main.TestProgram at 0x10b3e3590>"
+      ]
+     },
+     "execution_count": 45,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import unittest\n",
+    "\n",
+    "def fizz_buzz(number):\n",
+    "    return 'Fizz'\n",
+    "\n",
+    "class FizzBuzzTest(unittest.TestCase):\n",
+    "    def test3の倍数のときはFizzを出す(self):\n",
+    "        self.assertEqual(fizz_buzz(3),'Fizz')\n",
+    "\n",
+    "\n",
+    "unittest.main(argv=['first-arg-is-ignored'],exit=False)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  },
+  "pycharm": {
+   "stem_cell": {
+    "cell_type": "raw",
+    "source": [],
+    "metadata": {
+     "collapsed": false
+    }
+   }
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
