@@ -18,6 +18,18 @@ RUN apt-get update && \
     git \
     ca-certificates
 
+# Pandoc
+RUN apt-get update && \
+    apt-get install -y pandoc
+
+# PluntUML
+RUN apt-get update && \
+    apt-get install -y default-jdk graphviz fonts-takao
+RUN wget 'https://downloads.sourceforge.net/project/plantuml/plantuml.jar?r=http%3A%2F%2Fplantuml.com%2Fstarting&ts=1538667739&use_mirror=jaist' && \
+    mv 'plantuml.jar?r=http%3A%2F%2Fplantuml.com%2Fstarting&ts=1538667739&use_mirror=jaist' /usr/local/bin/plantuml.jar
+COPY ./plantuml.sh /usr/local/bin/plantuml
+RUN chmod a+x /usr/local/bin/plantuml
+
 # Python
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -48,14 +60,18 @@ RUN pip install --upgrade pip && \
     pip install sphinx-autobuild && \
     pip install nbsphinx && \
     pip install sphinx_rtd_theme && \
-    pip install sphinxcontrib-plantuml
+    pip install sphinxcontrib-plantuml && \
+    pip install RISE
 
-# Pandoc
-RUN apt-get install -y pandoc
+# RISE
+RUN jupyter-nbextension install rise --py --sys-prefix
+RUN jupyter-nbextension enable rise --py --sys-prefix
 
-# PluntUML
-RUN apt-get install -y default-jdk graphviz fonts-takao
-RUN wget 'https://downloads.sourceforge.net/project/plantuml/plantuml.jar?r=http%3A%2F%2Fplantuml.com%2Fstarting&ts=1538667739&use_mirror=jaist' && \
-    mv 'plantuml.jar?r=http%3A%2F%2Fplantuml.com%2Fstarting&ts=1538667739&use_mirror=jaist' /usr/local/bin/plantuml.jar
-COPY ./plantuml.sh /usr/local/bin/plantuml
-RUN chmod a+x /usr/local/bin/plantuml
+# jupyter-vim-binding
+# Create required directory in case (optional)
+RUN mkdir -p $(jupyter --data-dir)/nbextensions
+# Clone the repository
+RUN cd $(jupyter --data-dir)/nbextensions && \
+    git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
+# Activate the extension
+RUN jupyter nbextension enable vim_binding/vim_binding
