@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/hiroshima-arc/programing_puzzles#readme",
   "devDependencies": {
-    "browser-sync": "^2.26.7",
+    "browser-sync": "^2.27.10",
     "connect-browser-sync": "^2.1.0",
     "cpx": "^1.5.0",
     "foreman": "^3.0.1",
